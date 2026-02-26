@@ -1,6 +1,7 @@
 import { getUser, getWorkspace, getProperties } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { TopNav } from '@/components/TopNav';
+import { DurationFilter } from '@/components/DurationFilter';
 import { PropertyCard } from '@/components/PropertyCard';
 import { PropertiesTable } from '@/components/PropertiesTable';
 import { TopCountriesTable } from '@/components/TopCountriesTable';
@@ -21,9 +22,11 @@ export default async function DashboardPage() {
       <TopNav user={user} />
       
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 md:px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4 mb-8">
           <h1 className="text-2xl font-semibold tracking-tight font-mono uppercase">Overview</h1>
-          <Link 
+          <div className="flex-1" />
+          <DurationFilter />
+          <Link
             href="/dashboard/properties"
             className="flex items-center gap-2 text-sm font-medium bg-secondary hover:bg-secondary/80 text-foreground px-4 py-2 rounded-md transition-colors font-mono uppercase tracking-wider"
           >
