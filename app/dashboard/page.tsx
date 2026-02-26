@@ -2,6 +2,7 @@ import { getUser, getWorkspace, getProperties } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { TopNav } from '@/components/TopNav';
 import { PropertyCard } from '@/components/PropertyCard';
+import { PropertiesTable } from '@/components/PropertiesTable';
 import { Plus, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -20,10 +21,10 @@ export default async function DashboardPage() {
       
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 md:px-6 py-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight">Overview</h1>
+          <h1 className="text-2xl font-semibold tracking-tight font-mono uppercase">Overview</h1>
           <Link 
             href="/dashboard/properties"
-            className="flex items-center gap-2 text-sm font-medium bg-secondary hover:bg-secondary/80 text-foreground px-4 py-2 rounded-md transition-colors"
+            className="flex items-center gap-2 text-sm font-medium bg-secondary hover:bg-secondary/80 text-foreground px-4 py-2 rounded-md transition-colors font-mono uppercase tracking-wider"
           >
             <Plus className="w-4 h-4" />
             Add Property
@@ -41,17 +42,21 @@ export default async function DashboardPage() {
             </p>
             <Link 
               href="/dashboard/properties"
-              className="flex items-center gap-2 bg-brand text-white px-6 py-3 rounded-md font-medium hover:bg-brand/90 transition-colors"
+              className="flex items-center gap-2 bg-brand text-black px-6 py-3 font-mono font-bold uppercase tracking-widest hover:bg-white transition-colors"
             >
               Connect GA4 Properties
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {properties.map((prop: any) => (
-              <PropertyCard key={prop.id} property={prop} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {properties.map((prop: any) => (
+                <PropertyCard key={prop.id} property={prop} />
+              ))}
+            </div>
+            
+            <PropertiesTable properties={properties} />
+          </>
         )}
       </main>
     </div>
