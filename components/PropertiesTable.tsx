@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 
-function PropertyRow({ property }: { property: any }) {
+function PropertyRow({ property, onDataLoaded }: { property: any, onDataLoaded: (id: string, users: number) => void }) {
   const [totals, setTotals] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -16,6 +16,7 @@ function PropertyRow({ property }: { property: any }) {
         const json = await res.json();
         if (json.totals) {
           setTotals(json.totals);
+          onDataLoaded(property.id, json.totals.users);
         } else {
           setError(true);
         }
@@ -27,7 +28,7 @@ function PropertyRow({ property }: { property: any }) {
       }
     }
     fetchData();
-  }, [property.id]);
+  }, [property.id, onDataLoaded]);
 
   const formatNumber = (num: number) => {
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'm';
@@ -67,11 +68,34 @@ function PropertyRow({ property }: { property: any }) {
 }
 
 export function PropertiesTable({ properties }: { properties: any[] }) {
+  const [propertyUsers, setPropertyUsers] = useState<Record<string, number>>({});
+
+  const handleDataLoaded = (id: string, users: number) => {
+    setPropertyUsers(prev => ({ ...prev, [id]: users }));
+  };
+
   if (!properties || properties.length === 0) return null;
+
+  const totalUsers = Object.values(propertyUsers).reduce((sum, users) => sum + users, 0);
+  const isAllLoaded = Object.keys(propertyUsers).length === properties.length;
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'm';
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+    return num.toString();
+  };
 
   return (
     <div className="mt-12">
-      <h2 className="text-xl font-semibold tracking-tight mb-6 font-mono uppercase">Sites Summary</h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-semibold tracking-tight font-mono uppercase">Sites Summary</h2>
+        <div className="bg-secondary/30 border border-white/10 px-4 py-2 rounded-md flex items-center gap-3">
+          <span className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Total Users</span>
+          <span className="font-mono font-bold text-brand">
+            {!isAllLoaded ? <Loader2 className="w-4 h-4 animate-spin inline" /> : formatNumber(totalUsers)}
+          </span>
+        </div>
+      </div>
       <div className="rounded-xl border border-white/10 bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left whitespace-nowrap">
@@ -87,7 +111,7 @@ export function PropertiesTable({ properties }: { properties: any[] }) {
             </thead>
             <tbody>
               {properties.map((prop) => (
-                <PropertyRow key={prop.id} property={prop} />
+                <PropertyRow key={prop.id} property={prop} onDataLoaded={handleDataLoaded} />
               ))}
             </tbody>
           </table>
