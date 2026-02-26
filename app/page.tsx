@@ -1,13 +1,14 @@
 import { LoginButton } from "@/components/LoginButton";
-import { BarChart3, Activity, Globe, Zap } from "lucide-react";
+import { Activity, Globe, Zap } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-brand selection:text-black overflow-hidden flex flex-col">
       {/* Top Nav / Header */}
       <header className="w-full border-b border-white/20 p-6 flex justify-between items-center relative z-20 bg-black">
-        <div className="flex items-center gap-2 font-mono text-brand font-bold text-xl uppercase tracking-wider">
-          <BarChart3 className="w-6 h-6" />
+        <div className="flex items-center gap-3 font-mono text-brand font-bold text-xl uppercase tracking-wider">
+          <Logo className="w-8 h-8" />
           <span>MetricDeck</span>
         </div>
         <div className="font-mono text-xs uppercase tracking-widest text-white/50 hidden sm:block">

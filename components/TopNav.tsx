@@ -1,8 +1,9 @@
 'use client';
 
-import { BarChart3, ChevronDown, Settings, LogOut, Moon, Sun, LayoutDashboard } from "lucide-react";
+import { ChevronDown, Settings, LogOut, Moon, Sun, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { Logo } from "@/components/Logo";
 
 export function TopNav({ user }: { user: any }) {
   const [dateRange, setDateRange] = useState("7d");
@@ -14,8 +15,8 @@ export function TopNav({ user }: { user: any }) {
         
         {/* Left: Logo + Workspace */}
         <div className="flex items-center gap-4 flex-1">
-          <Link href="/dashboard" className="flex items-center gap-2 text-brand font-semibold">
-            <BarChart3 className="h-5 w-5" />
+          <Link href="/dashboard" className="flex items-center gap-3 text-brand font-mono font-bold uppercase tracking-wider">
+            <Logo className="w-6 h-6" />
             <span className="hidden sm:inline-block">MetricDeck</span>
           </Link>
           <div className="h-4 w-px bg-white/10" />
