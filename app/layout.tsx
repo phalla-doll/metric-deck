@@ -1,4 +1,4 @@
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
@@ -6,7 +6,7 @@ const inter = Inter({
   variable: '--font-sans',
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
 });
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
+    <html lang="en" className={`${inter.variable} ${geistMono.variable} dark`}>
       <body className="min-h-screen bg-background text-foreground antialiased selection:bg-brand selection:text-white">
         {children}
       </body>
