@@ -44,23 +44,23 @@ function PropertyRow({ property, onDataLoaded }: { property: any, onDataLoaded: 
 
   return (
     <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
-      <td className="p-4">
+      <td className="px-4 py-3">
         <div className="font-medium text-foreground">{property.name}</div>
-        <div className="text-xs text-muted-foreground mt-1">{property.url}</div>
+        <div className="text-xs text-muted-foreground mt-0.5">{property.url}</div>
       </td>
-      <td className="p-4 text-right font-mono text-sm">
+      <td className="px-4 py-3 text-right font-mono text-sm">
         {loading ? <Loader2 className="w-4 h-4 animate-spin inline text-muted-foreground" /> : error ? '-' : formatNumber(totals?.users || 0)}
       </td>
-      <td className="p-4 text-right font-mono text-sm">
+      <td className="px-4 py-3 text-right font-mono text-sm">
         {loading ? <Loader2 className="w-4 h-4 animate-spin inline text-muted-foreground" /> : error ? '-' : formatNumber(totals?.sessions || 0)}
       </td>
-      <td className="p-4 text-right font-mono text-sm">
+      <td className="px-4 py-3 text-right font-mono text-sm">
         {loading ? <Loader2 className="w-4 h-4 animate-spin inline text-muted-foreground" /> : error ? '-' : formatNumber(totals?.views || 0)}
       </td>
-      <td className="p-4 text-right font-mono text-sm">
+      <td className="px-4 py-3 text-right font-mono text-sm">
         {loading ? <Loader2 className="w-4 h-4 animate-spin inline text-muted-foreground" /> : error ? '-' : `${(totals?.bounceRate * 100 || 0).toFixed(1)}%`}
       </td>
-      <td className="p-4 text-right font-mono text-sm">
+      <td className="px-4 py-3 text-right font-mono text-sm">
         {loading ? <Loader2 className="w-4 h-4 animate-spin inline text-muted-foreground" /> : error ? '-' : formatDuration(totals?.avgDuration || 0)}
       </td>
     </tr>
@@ -101,12 +101,12 @@ export function PropertiesTable({ properties }: { properties: any[] }) {
           <table className="w-full text-sm text-left whitespace-nowrap">
             <thead className="text-xs text-muted-foreground uppercase bg-secondary/20 border-b border-white/5 font-mono tracking-wider">
               <tr>
-                <th className="p-4 font-medium">Property</th>
-                <th className="p-4 font-medium text-right">Users</th>
-                <th className="p-4 font-medium text-right">Sessions</th>
-                <th className="p-4 font-medium text-right">Views</th>
-                <th className="p-4 font-medium text-right">Bounce Rate</th>
-                <th className="p-4 font-medium text-right">Avg Time</th>
+                <th className="px-4 py-3 font-medium w-[30%]">Property</th>
+                <th className="px-4 py-3 font-medium text-right w-[14%]">Users</th>
+                <th className="px-4 py-3 font-medium text-right w-[14%]">Sessions</th>
+                <th className="px-4 py-3 font-medium text-right w-[14%]">Views</th>
+                <th className="px-4 py-3 font-medium text-right w-[14%]">Bounce Rate</th>
+                <th className="px-4 py-3 font-medium text-right w-[14%]">Avg Time</th>
               </tr>
             </thead>
             <tbody>
