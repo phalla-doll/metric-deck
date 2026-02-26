@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { TopNav } from '@/components/TopNav';
 import { PropertyCard } from '@/components/PropertyCard';
 import { PropertiesTable } from '@/components/PropertiesTable';
+import { TopCountriesTable } from '@/components/TopCountriesTable';
 import { Plus, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -56,6 +57,7 @@ export default async function DashboardPage() {
             </div>
             
             <PropertiesTable properties={properties} />
+            <TopCountriesTable />
           </>
         )}
       </main>
