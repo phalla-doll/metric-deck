@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getTokens, getOAuthClient } from '@/lib/google';
-import db from '@/lib/db';
 import { google } from 'googleapis';
 import { cookies } from 'next/headers';
 
@@ -22,36 +21,18 @@ export async function GET(request: Request) {
       throw new Error('Failed to get user info');
     }
 
-    // Insert or update user
-    const stmt = db.prepare(`
-      INSERT INTO users (id, email, name, avatar_url, refresh_token)
-      VALUES (?, ?, ?, ?, ?)
-      ON CONFLICT(id) DO UPDATE SET
-        name = excluded.name,
-        avatar_url = excluded.avatar_url,
-        refresh_token = COALESCE(excluded.refresh_token, users.refresh_token)
-    `);
-    
-    stmt.run(
-      userInfo.data.id,
-      userInfo.data.email,
-      userInfo.data.name || '',
-      userInfo.data.picture || '',
-      tokens.refresh_token || null
-    );
+    // Create user session object
+    const userSession = {
+      id: userInfo.data.id,
+      email: userInfo.data.email,
+      name: userInfo.data.name || '',
+      avatar_url: userInfo.data.picture || '',
+      refresh_token: tokens.refresh_token || '',
+    };
 
-    // Create default workspace if not exists
-    const wsStmt = db.prepare('SELECT id FROM workspaces WHERE user_id = ? LIMIT 1');
-    const existingWs = wsStmt.get(userInfo.data.id);
-    
-    if (!existingWs) {
-      const createWs = db.prepare('INSERT INTO workspaces (id, user_id, name) VALUES (?, ?, ?)');
-      createWs.run(`ws_${Date.now()}`, userInfo.data.id, 'My Workspace');
-    }
-
-    // Set session cookie
+    // Set session cookie with user data
     const cookieStore = await cookies();
-    cookieStore.set('session', userInfo.data.id, {
+    cookieStore.set('session', JSON.stringify(userSession), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

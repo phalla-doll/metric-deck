@@ -40,9 +40,14 @@ export default function Home() {
             
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
               <LoginButton />
-              <span className="font-mono text-xs text-white/40 uppercase tracking-widest">
-                [ Demo Mode Active ]
-              </span>
+              <form action="/api/auth/mock" method="POST">
+                <button
+                  type="submit"
+                  className="font-mono text-xs text-white/40 uppercase tracking-widest hover:text-brand transition-colors"
+                >
+                  [ View Demo ]
+                </button>
+              </form>
             </div>
           </div>
         </div>
