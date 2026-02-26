@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Loader2 } from 'lucide-react';
 
 function PropertyRow({ property, onDataLoaded }: { property: any, onDataLoaded: (id: string, users: number) => void }) {
@@ -70,9 +70,9 @@ function PropertyRow({ property, onDataLoaded }: { property: any, onDataLoaded: 
 export function PropertiesTable({ properties }: { properties: any[] }) {
   const [propertyUsers, setPropertyUsers] = useState<Record<string, number>>({});
 
-  const handleDataLoaded = (id: string, users: number) => {
+  const handleDataLoaded = useCallback((id: string, users: number) => {
     setPropertyUsers(prev => ({ ...prev, [id]: users }));
-  };
+  }, []);
 
   if (!properties || properties.length === 0) return null;
 
